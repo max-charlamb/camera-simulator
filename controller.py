@@ -24,9 +24,7 @@ class Controller():
                 self.idx.insert(i, (left, bottom, right, top), obj=t)
 
         if plane_json_file:
-            with open(plane_json_file) as plane_json:
-                plane = json.load(plane_json)
-                self.update_plane_json(plane)
+            self.update_plane_json(plane_json_file)
         else:
             # Defualt Plane Telemetry
             self.x, self.y, self.z = 0.0, 0.0, 500.0
@@ -34,9 +32,7 @@ class Controller():
             self.roll, self.pitch, self.yaw = 0.0, 0.0, 0.0
 
         if camera_json_file:
-            with open(camera_json_file) as camera_json:
-                camera = json.load(camera_json)
-                self.update_camera_json(camera)
+            self.update_camera_json(camera_json_file)
         else:
             # Defualt Image resolution
             self.width, self.height = 5456, 3632
@@ -52,11 +48,13 @@ class Controller():
         if z :
             self.z = z
 
-    def update_plane_json(self, json):
-        """Takes an opened JSON file with the attributes lat, lon, z,
+    def update_plane_json(self, file):
+        """Takes a JSON file with the attributes lat, lon, z,
         roll, pitch, yaw. Updates the plane position and orientation."""
-        self.update_plane_latlon(json['lat'], json['lon'], json['z'])
-        self.update_gimbal(json['roll'], json['pitch'], json['yaw'])
+        with open(file) as plane_json:
+            plane = json.load(plane_json)
+            self.update_plane_latlon(plane['lat'], plane['lon'], plane['z'])
+            self.update_gimbal(plane['roll'], plane['pitch'], plane['yaw'])
 
     def update_gimbal(self, roll, pitch, yaw):
         self.roll, self.pitch, self.yaw = roll, pitch, yaw
@@ -64,12 +62,14 @@ class Controller():
     def update_camera(self, fov_x, fov_y):
         self.fov_x, self.fov_y = fov_x, fov_y
 
-    def update_camera_json(self, json):
-        """Takes an open JSON files with the attributes width (in pixels),
+    def update_camera_json(self, file):
+        """Takes a JSON files with the attributes width (in pixels),
         height (in pixels), fov_x, and fov_y."""
-        self.update_camera(json['fov_x'], json['fov_y'])
-        self.height = json['height']
-        self.width = json['width']
+        with open(file) as camera_json:
+            camera = json.load(camera_json)
+            self.update_camera(camera['fov_x'], camera['fov_y'])
+            self.height = camera['height']
+            self.width = camera['width']
 
     def generate_image(self, points, color=(0, 255, 0, 255)):
         left, bottom, right, top = util.get_bouding_box(points)
@@ -128,4 +128,10 @@ class Controller():
 
 if __name__ == "__main__":
     c = Controller("json/data.json", plane_json_file="json/plane.json", camera_json_file="json/firstpass.json")
-    c.capture()
+    arr = c.capture()
+    im = Image.fromarray(arr)
+    im.save('figures/firstpass.png')
+    c.update_camera_json('json/secondpass.json')
+    arr = c.capture()
+    im = Image.fromarray(arr)
+    im.save('figures/secondpass.png')

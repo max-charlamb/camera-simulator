@@ -45,7 +45,7 @@ def createShapes(n):
 
 if __name__ == "__main__":
     data = []
-    data.append(createRandomShape(43, 2))
-    data.append(createRandomShape(43, 2))
+    data.append(createRandomShape(0, 0))
+    data.append(createRandomShape(0, 0))
     with open('json/data.json', 'w') as outfile:
         json.dump(data, outfile)

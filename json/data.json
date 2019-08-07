@@ -1,22 +1,22 @@
 [
   {
-    "shape": "star",
-    "alpha": "N",
-    "shape_color": "orange",
-    "alpha_color": "brown",
-    "orientation": 208,
-    "lat": 43.0000905377393,
-    "lon": 2.000049384221436,
+    "shape": "triangle",
+    "alpha": "R",
+    "shape_color": "purple",
+    "alpha_color": "gray",
+    "orientation": 71,
+    "lat": 0.00009053773930008535,
+    "lon": 0.000008230703572735033,
     "size": 5
   },
   {
-    "shape": "cross",
-    "alpha": "O",
-    "shape_color": "black",
-    "alpha_color": "brown",
-    "orientation": 344,
-    "lat": 43.00000548713572,
-    "lon": 2.0000109742714303,
+    "shape": "rectangle",
+    "alpha": "B",
+    "shape_color": "purple",
+    "alpha_color": "red",
+    "orientation": 354,
+    "lat": 0,
+    "lon": 0,
     "size": 5
   }
 ]

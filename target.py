@@ -11,15 +11,26 @@ class Target():
         self.size = size
         self.param = param
         self.target_img = None
+        self.shape_color_code = None
+        self.alpha_color_code = None
+        self.set_color()
+
+    def set_color(self):
+        self.shape_color_code, shape_color = generator.get_color(self.param["shape_color"])
+        self.text_color_code, text_color = generator.get_color(self.param["alpha_color"])
+        #Prevent target and letter from being the same color
+        while shape_color == text_color:
+            shape_color_code, shape_color = generator.get_color()
+            text_color_code, text_color = generator.get_color()
 
     def create(self, width, height):
         if self.target_img is None:
             self.target_img = generator.create_target(shape=self.param["shape"],
                                             alpha=self.param["alpha"],
-                                            shape_color=self.param["shape_color"],
-                                            alpha_color=self.param["alpha_color"],
                                             orientation=self.param["orientation"],
-                                            size=(width, height))
+                                            size=(width, height),
+                                            shape_color_code=self.shape_color_code,
+                                            alpha_color_code=self.alpha_color_code)
         return self.target_img
 
     def _show(self):

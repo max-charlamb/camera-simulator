@@ -15,7 +15,7 @@ def get_color(color):
         color_code: hue, saturation, luminance string
         color: color name string
     '''
-    
+
     colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'black', 'gray', 'white']
 
     if not color in colors:
@@ -244,18 +244,11 @@ def draw_text(alpha, draw, size, color):
     draw.text(text_pos, text, fill=color, font=font)
     return text
 
-def create_target(shape, alpha, shape_color, alpha_color, orientation, size):
+def create_target(shape, alpha, orientation, size, shape_color_code, alpha_color_code):
     im = Image.new('RGBA', size, color=(0,0,0,0))
     draw = ImageDraw.Draw(im)
-    shape_color_code, shape_color = get_color(shape_color)
-    text_color_code, text_color = get_color(alpha_color)
-    #Prevent target and letter from being the same color
-    while shape_color == text_color:
-        shape_color_code, shape_color = get_color()
-        text_color_code, text_color = get_color()
-
     shape = draw_shape(shape, draw, size, shape_color_code)
-    text = draw_text(alpha, draw, size, text_color_code)
+    text = draw_text(alpha, draw, size, alpha_color_code)
     im = ImageOps.expand(im, border=int(size[0]*10/100), fill=(0))
     if orientation >= 360 or orientation < 0:
         orientation=rand.randint(0,355)
