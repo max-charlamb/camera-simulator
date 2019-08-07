@@ -16,12 +16,12 @@ def eulerAnglesToRotationMatrix(theta) :
                     [0,         math.cos(theta[0]), -math.sin(theta[0]) ],
                     [0,         math.sin(theta[0]), math.cos(theta[0])  ]
                     ])
-              
+
     R_y = np.array([[math.cos(theta[1]),    0,      math.sin(theta[1])  ],
                     [0,                     1,      0                   ],
                     [-math.sin(theta[1]),   0,      math.cos(theta[1])  ]
                     ])
-                 
+
     R_z = np.array([[math.cos(theta[2]),    -math.sin(theta[2]),    0],
                     [math.sin(theta[2]),    math.cos(theta[2]),     0],
                     [0,                     0,                      1]
@@ -32,7 +32,7 @@ def eulerAnglesToRotationMatrix(theta) :
 
 def get_points(x, y, z, roll, pitch, yaw, fov_x, fov_y):
     points = []
-    theta = np.asarray([roll, pitch, yaw])
+    theta = np.asarray([pitch, roll, yaw])
     pos = np.array([x,y,z])
     R = eulerAnglesToRotationMatrix(theta)
     v_init = np.array([0,0,-1])

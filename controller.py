@@ -100,7 +100,7 @@ class Controller():
 
     def capture(self):
         ground_pts = util.get_points(self.x, self.y, self.z,
-                                     self.pitch, self.roll, self.yaw,
+                                     self.roll, self.pitch, self.yaw,
                                      self.fov_x, self.fov_y)
         #print(ground_pts)
         im, flag = self.generate_image(ground_pts)
