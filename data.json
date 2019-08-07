@@ -1,26 +1,26 @@
 [
   {
-    "shape": "triangle",
-    "alpha": "K",
+    "shape": "rectangle",
+    "alpha": "C",
     "shape_color": "yellow",
-    "alpha_color": "green",
-    "orientation": 235,
-    "y": 14,
-    "x": 5,
-    "lat": 0.00003840995000609682,
-    "lon": 0.000013717839287891719,
-    "size": 2
+    "alpha_color": "orange",
+    "orientation": 167,
+    "y": 23,
+    "x": 11,
+    "lat": 0.00006310206072430191,
+    "lon": 0.000030179246433361785,
+    "size": 5
   },
   {
-    "shape": "hexagon",
-    "alpha": "T",
-    "shape_color": "brown",
-    "alpha_color": "green",
-    "orientation": 178,
-    "y": 6,
-    "x": 26,
-    "lat": 0.000016461407145470066,
-    "lon": 0.00007133276429703694,
+    "shape": "cross",
+    "alpha": "M",
+    "shape_color": "black",
+    "alpha_color": "yellow",
+    "orientation": 70,
+    "y": 2,
+    "x": 12,
+    "lat": 0.000005487135715156688,
+    "lon": 0.00003292281429094013,
     "size": 4
   }
 ]

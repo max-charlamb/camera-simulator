@@ -24,13 +24,13 @@ class Controller():
                 self.idx.insert(i, (left, bottom, right, top), obj=t)
 
         # Plane Telemetry
-        self.x, self.y, self.z = 0.0, 0.0, 10.0
+        self.x, self.y, self.z = 0.0, 0.0, 500.0
 
         # Gimbal Orientation
         self.roll, self.pitch, self.yaw = 0.0, 0.0, 0.0
 
         # Image resolution
-        self.width, self.height = 2000, 1000
+        self.width, self.height = 5456, 3632
 
         # Camera Setting
         self.fov_x = 78 * np.pi / 180
@@ -38,6 +38,11 @@ class Controller():
 
     def update_plane(self, x, y, z):
         self.x, self.y, self.z = x, y, z
+
+    def update_plane_latlon(self, lat, lon, z=None):
+        self.y, self.x = util.gps_to_feet(lat, lon)
+        if z :
+            self.z = z
 
     def update_gimbal(self, roll, pitch, yaw):
         self.roll, self.pitch, self.yaw = roll, pitch, yaw
@@ -67,7 +72,7 @@ class Controller():
         img = Image.new('RGBA', (int(width), int(height)), color)
         for t in targets:
             offset = (int((t.x - left)*scaling_factor), int((t.y - bottom)*scaling_factor))
-            target_img = t.create(target_size, target_size)
+            target_img = t.create(target_size * t.size, target_size * t.size)
             img = util.compose(img, target_img, offset)
 
         return np.asarray(img), True
