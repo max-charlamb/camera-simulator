@@ -1,0 +1,26 @@
+[
+  {
+    "shape": "triangle",
+    "alpha": "K",
+    "shape_color": "yellow",
+    "alpha_color": "green",
+    "orientation": 235,
+    "y": 14,
+    "x": 5,
+    "lat": 0.00003840995000609682,
+    "lon": 0.000013717839287891719,
+    "size": 2
+  },
+  {
+    "shape": "hexagon",
+    "alpha": "T",
+    "shape_color": "brown",
+    "alpha_color": "green",
+    "orientation": 178,
+    "y": 6,
+    "x": 26,
+    "lat": 0.000016461407145470066,
+    "lon": 0.00007133276429703694,
+    "size": 4
+  }
+]

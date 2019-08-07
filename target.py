@@ -1,11 +1,14 @@
 import json
 import generator
 import matplotlib.pyplot as plt
+import util
 
 class Target():
-    def __init__(self, lat, lon, param, size):
-        self.lat = lat
-        self.lon = lon
+    def __init__(self, x, y, param, size):
+        self.x = x
+        self.y = y
+        self.lat = util.feet_to_gps(y)
+        self.lon = util.feet_to_gps(x)
         self.size = size
         self.param = param
         self.target_img = None
@@ -25,23 +28,24 @@ class Target():
         plt.imshow(self.target_img)
         plt.show()
 
-    
+
     def __lt__(t1, t2):
         return t1.size < t2.size
 
     def __gt__(t1, t2):
         return t1.size > t2.size
-    
+
 
 
 
 
 if __name__ == "__main__":
 
-    with open("targets.json") as target_json:
+    with open("data.json") as target_json:
         targets = json.load(target_json)
         for target in targets:
-            t = Target(target["lat"], target["lon"], target, (200, 200))
+            t = Target(target["y"], target["x"], target, (200, 200))
+            t.create(100, 100)
             t._show()
 
 

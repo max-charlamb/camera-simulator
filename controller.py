@@ -17,14 +17,14 @@ class Controller():
         with open(json_file) as target_json:
             target_data = json.load(target_json)
             for i, target in enumerate(target_data):
-                t = Target(target["lat"], target["lon"], target, target["size"])
+                t = Target(target["y"], target["x"], target, target["size"])
                 self.targets.append(t)
-                diff = util.feet_to_gps(t.size)/2
-                left, bottom, right, top = (t.lon - diff, t.lat - diff, t.lon + diff, t.lat + diff)
+                diff = t.size/2
+                left, bottom, right, top = (t.x - diff, t.y - diff, t.x + diff, t.y + diff)
                 self.idx.insert(i, (left, bottom, right, top), obj=t)
 
         # Plane Telemetry
-        self.x, self.y, self.z = 0.0, 0.0, 60.0
+        self.x, self.y, self.z = 0.0, 0.0, 10.0
 
         # Gimbal Orientation
         self.roll, self.pitch, self.yaw = 0.0, 0.0, 0.0
@@ -45,7 +45,7 @@ class Controller():
     def update_camera(self, fov_x, fov_y):
         self.fov_x, self.fov_y = fov_x, fov_y
 
-    def generate_image(self, points, target_size=300, color=(0, 255, 0, 255)):
+    def generate_image(self, points, color=(0, 255, 0, 255)):
         left, bottom, right, top = util.get_bouding_box(points)
 
         targets = list(self.idx.intersection((left, bottom, right, top), objects="raw"))
@@ -55,25 +55,26 @@ class Controller():
             return img, False
 
         targets = sorted(targets)
-        pixel_per_latlon = target_size/targets[0].size
         width, height = right - left, top - bottom
         points[:,0] -= left
         points[:,1] -= bottom
-        print(points)
-        width *= pixel_per_latlon
-        height *= pixel_per_latlon
-        points*= pixel_per_latlon
+        scaling_factor = self.width / width
+        target_size = int(scaling_factor)
+        print(scaling_factor)
+        width *= scaling_factor
+        height *= scaling_factor
+        points*= scaling_factor
         img = Image.new('RGBA', (int(width), int(height)), color)
         for t in targets:
-            offset = (int((t.lon - left)*pixel_per_latlon), int((t.lat - bottom)*pixel_per_latlon))
+            offset = (int((t.x - left)*scaling_factor), int((t.y - bottom)*scaling_factor))
             target_img = t.create(target_size, target_size)
             img = util.compose(img, target_img, offset)
 
         return np.asarray(img), True
 
     def capture(self):
-        ground_pts = util.get_points(self.x, self.y, self.z, 
-                                     self.roll, self.pitch, self.yaw, 
+        ground_pts = util.get_points(self.x, self.y, self.z,
+                                     self.roll, self.pitch, self.yaw,
                                      self.fov_x, self.fov_y)
         print(ground_pts)
         im, flag = self.generate_image(ground_pts)
@@ -87,18 +88,18 @@ class Controller():
 
         if flag:
             image_pts = np.array([[self.width, 0],
-                                  [self.width, self.height], 
-                                  [0, self.height], 
+                                  [self.width, self.height],
+                                  [0, self.height],
                                   [0,0]])
 
             h, status = cv2.findHomography(ground_pts, image_pts)
             im2 = cv2.warpPerspective(im, h, (self.width, self.height))
             plt.imshow(im2)
-            plt.show() 
+            plt.show()
             return im2
 
-        return im 
+        return im
 
 if __name__ == "__main__":
-    c = Controller("targets.json")
+    c = Controller("data.json")
     c.capture()
