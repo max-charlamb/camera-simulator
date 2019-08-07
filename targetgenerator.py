@@ -34,7 +34,7 @@ def createRandomShape():
             "x": x,
             "lat" : util.feet_to_gps(y),
             "lon" : util.feet_to_gps(x),
-            "size": random.randint(1, 5)
+            "size": random.randint(3, 5)
            }
 
 def createShapes(n):
@@ -49,5 +49,5 @@ if __name__ == "__main__":
     data = []
     data.append(createRandomShape())
     data.append(createRandomShape())
-    with open('data.json', 'w') as outfile:
+    with open('json/data.json', 'w') as outfile:
         json.dump(data, outfile)
