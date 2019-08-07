@@ -12,12 +12,12 @@ def createShape(shape, alpha, shape_color, alpha_color, orientation, lat, lon, s
             "shape_color" : shape_color,
             "alpha_color" : alpha_color,
             "orientation" : orientation,
-            "y": lat,
-            "x": lon,
+            "lat": lat,
+            "lon": lon,
             "size": size
            }
 
-def createRandomShape():
+def createRandomShape(lat, lon):
     alpha_color, shape_color = (None, None)
     while alpha_color == shape_color:
         shape_color = random.choice(colors)
@@ -30,10 +30,8 @@ def createRandomShape():
             "shape_color" : shape_color,
             "alpha_color" : alpha_color,
             "orientation" : random.randint(0, 359),
-            "y": y,
-            "x": x,
-            "lat" : util.feet_to_gps(y),
-            "lon" : util.feet_to_gps(x),
+            "lat" : lat + util.feet_to_gps(y),
+            "lon" : lon + util.feet_to_gps(x),
             "size": random.randint(3, 5)
            }
 
@@ -47,7 +45,7 @@ def createShapes(n):
 
 if __name__ == "__main__":
     data = []
-    data.append(createRandomShape())
-    data.append(createRandomShape())
+    data.append(createRandomShape(43, 2))
+    data.append(createRandomShape(43, 2))
     with open('json/data.json', 'w') as outfile:
         json.dump(data, outfile)

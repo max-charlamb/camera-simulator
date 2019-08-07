@@ -17,7 +17,7 @@ class Controller():
         with open(target_json_file) as target_json:
             target_data = json.load(target_json)
             for i, target in enumerate(target_data):
-                t = Target(target["y"], target["x"], target, target["size"])
+                t = Target(target["lat"], target["lon"], target, target["size"])
                 self.targets.append(t)
                 diff = t.size/2
                 left, bottom, right, top = (t.x - diff, t.y - diff, t.x + diff, t.y + diff)
@@ -100,17 +100,17 @@ class Controller():
 
     def capture(self):
         ground_pts = util.get_points(self.x, self.y, self.z,
-                                     self.roll, self.pitch, self.yaw,
+                                     self.pitch, self.roll, self.yaw,
                                      self.fov_x, self.fov_y)
         #print(ground_pts)
         im, flag = self.generate_image(ground_pts)
         #print(ground_pts)
-        plt.imshow(im)
-        plt.plot(ground_pts[:,0], ground_pts[:,1], "-")
-        plt.plot(ground_pts[0,0], ground_pts[0,1], "ro")
+        #plt.imshow(im)
+        #plt.plot(ground_pts[:,0], ground_pts[:,1], "-")
+        #plt.plot(ground_pts[0,0], ground_pts[0,1], "ro")
 
-        plt.plot(ground_pts[3,0], ground_pts[3,1], "go")
-        plt.show()
+        #plt.plot(ground_pts[3,0], ground_pts[3,1], "go")
+        #plt.show()
 
         if flag:
             image_pts = np.array([[self.width, 0],
@@ -127,5 +127,5 @@ class Controller():
         return im
 
 if __name__ == "__main__":
-    c = Controller("json/data.json", plane_json_file="json/plane.json", camera_json_file="json/secondpass.json")
+    c = Controller("json/data.json", plane_json_file="json/plane.json", camera_json_file="json/firstpass.json")
     c.capture()
