@@ -244,7 +244,7 @@ def create_target(shape, alpha, orientation, size, shape_color_code, alpha_color
     im = Image.new('RGBA', size, color=(0,0,0,0))
     draw = ImageDraw.Draw(im)
     shape = draw_shape(shape, draw, size, shape_color_code)
-    text = draw_text(alpha, draw, size, text_color_code)
+    text = draw_text(alpha, draw, size, alpha_color_code)
     im = ImageOps.expand(im, border=int(size[0]*10/100), fill=(0))
     if orientation >= 360 or orientation < 0:
         orientation=rand.randint(0,355)
