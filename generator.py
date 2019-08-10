@@ -106,14 +106,14 @@ def draw_shape(shape, draw, size, color):
 
 
 def draw_circle(draw, size, color):
-    square_height = size[0]*rand.randint(60,95)/100
+    square_height = size[0]*70/100
     square_border = (size[0] - square_height)/2
     top=(square_border, square_border)
     bottom=(size[0]-square_border, size[0]-square_border)
     draw.pieslice([top, bottom], 0, 360, fill=color)
 
 def draw_semicircle(draw, size, color):
-    square_height = size[0]*rand.randint(85,100)/100
+    square_height = size[0]*92/100
     square_border = (size[0] - square_height)/2
     offset = square_height/4
     top=(square_border, square_border+offset)
@@ -121,7 +121,7 @@ def draw_semicircle(draw, size, color):
     draw.pieslice([top, bottom], 180, 360, fill=color)
 
 def draw_quarter_circle(draw, size, color):
-    square_height = size[0]*rand.randint(140,170)/100
+    square_height = size[0]*155/100
     square_border = (size[0] - square_height)/2
     offset = square_height/4
     top=(square_border+offset, square_border+offset)
@@ -132,19 +132,15 @@ def draw_quarter_circle(draw, size, color):
     draw.point((0,0), fill=color)
 
 def draw_square(draw, size, color):
-    square_height = size[0]*rand.randint(55,90)/100
+    square_height = size[0]*75/100
     square_border = (size[0] - square_height)/2
     top=(square_border, square_border)
     bottom=(size[0]-square_border, size[0]-square_border)
     draw.rectangle([top, bottom], fill=color)
 
 def draw_rectangle(draw, size, color):
-    if(rand.randint(0,1)==0):
-        rectangle_width = size[0]*rand.randint(40,50)/100
-        rectangle_height = size[0]*rand.randint(80,97)/100
-    else:
-        rectangle_width = size[0]*rand.randint(80,97)/100
-        rectangle_height = size[0]*rand.randint(40,50)/100
+    rectangle_width = size[0]*55/100
+    rectangle_height = size[0]*89/100
 
     border_width = (size[0] - rectangle_width)/2
     border_height = (size[0] - rectangle_height)/2
@@ -153,9 +149,9 @@ def draw_rectangle(draw, size, color):
     draw.rectangle([top, bottom], fill=color)
 
 def draw_trapezoid(draw, size, color):
-    top_width = size[0]*rand.randint(40,50)/100
-    bottom_width = size[0]*rand.randint(75,95)/100
-    height = size[0]*rand.randint(42,60)/100
+    top_width = size[0]*55/100
+    bottom_width = size[0]*82/100
+    height = size[0]*51/100
 
     border_top_width = (size[0] - top_width)/2
     border_bottom_width = (size[0] - bottom_width)/2
@@ -196,7 +192,7 @@ def draw_star(draw, size, color):
     draw.polygon(points, fill=color)
 
 def draw_polygon(draw, size, sides, color):
-    cord = size[0]*rand.randint(45,50)/100
+    cord = size[0]*47/100
     angle = 2*math.pi/sides
     rotation = 0
     points =[]
@@ -208,8 +204,8 @@ def draw_polygon(draw, size, sides, color):
     draw.polygon(points, fill=color)
 
 def draw_cross(draw, size, color):
-    rectangle_width = size[0]*rand.randint(35,40)/100
-    rectangle_height = size[0]*rand.randint(85,99)/100
+    rectangle_width = size[0]*38/100
+    rectangle_height = size[0]*92/100
 
     border_width = (size[0] - rectangle_width)/2
     border_height = (size[0] - rectangle_height)/2
@@ -248,7 +244,7 @@ def create_target(shape, alpha, orientation, size, shape_color_code, alpha_color
     im = Image.new('RGBA', size, color=(0,0,0,0))
     draw = ImageDraw.Draw(im)
     shape = draw_shape(shape, draw, size, shape_color_code)
-    text = draw_text(alpha, draw, size, alpha_color_code)
+    text = draw_text(alpha, draw, size, text_color_code)
     im = ImageOps.expand(im, border=int(size[0]*10/100), fill=(0))
     if orientation >= 360 or orientation < 0:
         orientation=rand.randint(0,355)
