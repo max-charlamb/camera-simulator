@@ -120,8 +120,8 @@ class Controller():
 
             h, status = cv2.findHomography(ground_pts, image_pts)
             im2 = cv2.warpPerspective(im, h, (self.width, self.height))
-            plt.imshow(im2)
-            plt.show()
+            #plt.imshow(im2)
+            #plt.show()
             return im2
 
         return im
