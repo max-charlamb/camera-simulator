@@ -1,5 +1,6 @@
 import cv2
 import json
+import datetime
 import numpy as np
 from PIL import Image
 from rtree import index
@@ -126,12 +127,14 @@ class Controller():
 
         return im
 
+    def capture_save(self):
+        arr = self.capture()
+        im = Image.fromarray(arr)
+        name = datetime.datetime.now().strftime('%y-%m-%d-%H-%M-%S')
+        im.save(F'figures/{name}.png')
+
 if __name__ == "__main__":
     c = Controller("json/data.json", plane_json_file="json/plane.json", camera_json_file="json/firstpass.json")
-    arr = c.capture()
-    im = Image.fromarray(arr)
-    im.save('figures/firstpass.png')
+    c.capture_save()
     c.update_camera_json('json/secondpass.json')
-    arr = c.capture()
-    im = Image.fromarray(arr)
-    im.save('figures/secondpass.png')
+    c.capture_save()
